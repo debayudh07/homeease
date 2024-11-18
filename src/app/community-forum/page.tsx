@@ -20,9 +20,9 @@ const fadeIn = {
 
 export default function CommunityForum() {
   const [workers, setWorkers] = useState([
-    { id: 1, name: 'Alice Johnson', avatar: '/placeholder.svg?height=40&width=40', rating: 4.8, skills: ['Cleaning', 'Organizing'], location: 'New York, NY' },
-    { id: 2, name: 'Bob Smith', avatar: '/placeholder.svg?height=40&width=40', rating: 4.5, skills: ['Plumbing', 'Electrical'], location: 'Los Angeles, CA' },
-    { id: 3, name: 'Carol Williams', avatar: '/placeholder.svg?height=40&width=40', rating: 4.9, skills: ['Gardening', 'Landscaping'], location: 'Chicago, IL' },
+    { id: 1, name: 'Ramesh Bhopadhike', avatar: '/placeholder.svg?height=40&width=40', rating: 4.8, skills: ['Cleaning', 'Organizing'], location: 'New York, NY' },
+    { id: 2, name: 'Umesh Reshamiya', avatar: '/placeholder.svg?height=40&width=40', rating: 4.5, skills: ['Plumbing', 'Electrical'], location: 'Los Angeles, CA' },
+    { id: 3, name: 'Sutiya Kamaral', avatar: '/placeholder.svg?height=40&width=40', rating: 4.9, skills: ['Gardening', 'Landscaping'], location: 'Chicago, IL' },
   ])
 
   const [selectedWorker, setSelectedWorker] = useState<{ id: number; name: string; avatar: string; rating: number; skills: string[]; location: string } | null>(null)
