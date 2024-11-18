@@ -352,6 +352,14 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
       >
         Worker Dashboard
       </motion.a>
+      <motion.a 
+        href="/community-forum"
+        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Community Forum
+      </motion.a>
       <motion.span 
         className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
         whileHover={{ scale: 1.1 }}
