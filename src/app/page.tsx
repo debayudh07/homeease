@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 'use client'
 
 import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, useState } from 'react'
