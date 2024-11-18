@@ -118,20 +118,22 @@ export default function HomePage() {
             className="flex justify-center space-x-4"
             variants={fadeIn}
           >
-            <motion.span 
+            <motion.a 
+              href="/dashboard"
               className="bg-orange-500 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-orange-600 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Post a Job
-            </motion.span>
-            <motion.span 
+            </motion.a>
+            <motion.a 
+              href="/worker-dashboard"
               className="bg-orange-600 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-orange-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Find Work
-            </motion.span>
+            </motion.a>
           </motion.div>
         </motion.section>
 
