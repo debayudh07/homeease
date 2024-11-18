@@ -1,10 +1,19 @@
 'use client'
 
+import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users, Menu, X } from 'lucide-react'
 import { motion, useAnimation } from 'framer-motion'
-import { useEffect, useState } from 'react'
 
+import { useEffect } from 'react';
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -20,7 +29,22 @@ const stagger = {
 }
 
 export default function HomePage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    bio: '',
+    skills: [],
+    experience: '',
+    availability: '',
+    hourlyRate: '',
+  })
   const controls = useAnimation()
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     controls.start((i) => ({
@@ -31,40 +55,43 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white text-orange-500">
-      <div className="h-16"></div> {/* Spacer for fixed header */}
-      <header className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-sm transition-all duration-300 ease-in-out md:px-6 lg:px-8 text-orange-500">
-        <motion.h1 
-          className="text-2xl font-bold"
-          initial={{ x: -20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          HomeEase
-        </motion.h1>
-        <nav className="space-x-4">
-          <motion.span 
-            className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Dashboard
-          </motion.span>
-          <motion.span 
-            className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Login
-          </motion.span>
-          <motion.span 
-            className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Sign Up
-          </motion.span>
+    <div className="h-16"></div> {/* Spacer for fixed header */}
+    <header className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-sm transition-all duration-300 ease-in-out md:px-6 lg:px-8 text-orange-500">
+      <motion.h1 
+        className="text-2xl font-bold"
+        initial={{ x: -20, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        HomeEase
+      </motion.h1>
+      <nav className="hidden md:flex space-x-4">
+        <NavItems setIsLoginOpen={setIsLoginOpen} setIsSignUpOpen={setIsSignUpOpen} />
+      </nav>
+      <div className="md:hidden">
+        <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <Menu className="h-6 w-6" />
+        </Button>
+      </div>
+    </header>
+
+    {/* Mobile menu */}
+    {isMobileMenuOpen && (
+      <div className="fixed inset-0 z-50 bg-white p-4 md:hidden">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">Menu</h2>
+          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
+            <X className="h-6 w-6" />
+          </Button>
+        </div>
+        <nav className="flex flex-col space-y-4">
+          <NavItems setIsLoginOpen={setIsLoginOpen} setIsSignUpOpen={setIsSignUpOpen} />
         </nav>
-      </header>
+      </div>
+    )}
+
+
+      
 
       <main className="container mx-auto px-4 py-8">
         <motion.section 
@@ -283,6 +310,7 @@ export default function HomePage() {
           </motion.div>
         </motion.section>
       </main>
+     
 
       <footer className="mt-12 py-6 text-center text-orange-400">
         <p>&copy; 2023 HomeEase. All rights reserved.</p>
@@ -297,7 +325,254 @@ export default function HomePage() {
           }
         }
       `}</style>
+   <AuthDialogs isLoginOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} isSignUpOpen={isSignUpOpen} setIsSignUpOpen={setIsSignUpOpen} />
+   </div>
+  )
+}
+
+
+function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>, setIsSignUpOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+  return (
+    <>
+      <motion.span 
+        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Dashboard
+      </motion.span>
+      <motion.span 
+        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsLoginOpen(true)}
+      >
+        Login
+      </motion.span>
+      <motion.span 
+        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => setIsSignUpOpen(true)}
+      >
+        Sign Up
+      </motion.span>
+    </>
+  )
+}
+
+function AuthDialogs({ isLoginOpen, setIsLoginOpen, isSignUpOpen, setIsSignUpOpen }: { isLoginOpen: boolean, setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>, isSignUpOpen: boolean, setIsSignUpOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
+  return (
+    <>
+      <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <AuthDialog type="login" onClose={() => setIsLoginOpen(false)} />
+        </DialogContent>
+      </Dialog>
+      <Dialog open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <AuthDialog type="signup" onClose={() => setIsSignUpOpen(false)} />
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+function AuthDialog({ type, onClose }: { type: 'login' | 'signup', onClose: () => void }) {
+  const [userType, setUserType] = useState('user')
+
+  return (
+    <div>
+      <DialogHeader>
+        <DialogTitle>{type === 'login' ? 'Login' : 'Sign Up'}</DialogTitle>
+        <DialogDescription>
+          {type === 'login' ? 'Login to your account' : 'Create a new account'}
+        </DialogDescription>
+      </DialogHeader>
+      <Tabs value={userType} onValueChange={setUserType} className="w-full mt-4">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="user">User</TabsTrigger>
+          <TabsTrigger value="worker">Worker</TabsTrigger>
+        </TabsList>
+        <TabsContent value="user">
+          <UserAuthForm type={type} userType="user" />
+        </TabsContent>
+        <TabsContent value="worker">
+          <UserAuthForm type={type} userType="worker" />
+        </TabsContent>
+      </Tabs>
     </div>
+  )
+}
+
+function UserAuthForm({ type, userType }: { type: 'login' | 'signup', userType: string }) {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState<{
+    email: string;
+    password: string;
+    name: string;
+    phone: string;
+    address: string;
+    bio: string;
+    skills: string[];
+    experience: string;
+    availability: string;
+    hourlyRate: string;
+  }>({
+    email: '',
+    password: '',
+    name: '',
+    phone: '',
+    address: '',
+    bio: '',
+    skills: [],
+    experience: '',
+    availability: '',
+    hourlyRate: '',
+  })
+
+  const skillOptions = ['Cleaning', 'Plumbing', 'Electrical', 'Gardening', 'Painting', 'Carpentry'];
+
+  const handleInputChange = (e: { target: any }) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSkillChange = (skill: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      skills: prev.skills.includes(skill)
+        ? prev.skills.filter((s) => s !== skill)
+        : [...prev.skills, skill],
+    }));
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (step === 1) {
+      setStep(2); // Move to the second step
+    } else {
+      // Final submission logic
+      console.log('Form submitted', formData);
+    }
+  };
+
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+    {step === 1 && (
+      <>
+        {type === 'signup' && (
+          <div>
+            <Label htmlFor="name">Name</Label>
+            <Input id="name" name="name" value={formData.name} onChange={handleInputChange} required />
+          </div>
+        )}
+        <div>
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
+        </div>
+        <div>
+          <Label htmlFor="password">Password</Label>
+          <Input id="password" name="password" type="password" value={formData.password} onChange={handleInputChange} required />
+        </div>
+        {type === 'signup' && (
+          <>
+            <div>
+              <Label htmlFor="phone">Phone</Label>
+              <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} required />
+            </div>
+            <div>
+              <Label htmlFor="address">Address</Label>
+              <Input id="address" name="address" value={formData.address} onChange={handleInputChange} required />
+            </div>
+          </>
+        )}
+        <Button type="submit" className="w-full">
+          Next
+        </Button>
+      </>
+    )}
+    {step === 2 && (
+      <>
+        {userType === 'worker' && (
+          <>
+            <div>
+              <Label htmlFor="bio">Bio</Label>
+              <Textarea id="bio" name="bio" value={formData.bio} onChange={handleInputChange} required />
+            </div>
+            <div>
+              <Label>Skills</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {skillOptions.map((skill) => (
+                  <div key={skill} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`skill-${skill}`}
+                      checked={formData.skills.includes(skill)}
+                      onCheckedChange={() => handleSkillChange(skill)}
+                    />
+                    <label htmlFor={`skill-${skill}`}>{skill}</label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="experience">Years of Experience</Label>
+              <Select
+                name="experience"
+                value={formData.experience}
+                onValueChange={(value) =>
+                  handleInputChange({ target: { name: 'experience', value } })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select years of experience" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0-1">0-1 years</SelectItem>
+                  <SelectItem value="1-3">1-3 years</SelectItem>
+                  <SelectItem value="3-5">3-5 years</SelectItem>
+                  <SelectItem value="5+">5+ years</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="availability">Availability</Label>
+              <Input
+                id="availability"
+                name="availability"
+                placeholder="e.g., Weekdays 9AM-5PM"
+                value={formData.availability}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="hourlyRate">Hourly Rate ($)</Label>
+              <Input
+                id="hourlyRate"
+                name="hourlyRate"
+                type="number"
+                min="0"
+                step="0.01"
+                value={formData.hourlyRate}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+          </>
+        )}
+        <div className="flex justify-between">
+          <Button type="button" onClick={() => setStep(1)}>
+            Back
+          </Button>
+          <Button type="submit" className="w-full">
+            Submit
+          </Button>
+        </div>
+      </>
+    )}
+  </form>
   )
 }
 
@@ -344,3 +619,4 @@ const TypewriterEffect = () => {
     </motion.div>
   );
 };
+
