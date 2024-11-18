@@ -336,13 +336,22 @@ export default function HomePage() {
 function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>, setIsSignUpOpen: React.Dispatch<React.SetStateAction<boolean>> }) {
   return (
     <>
-      <motion.span 
+      <motion.a 
+        href="/dashboard"
         className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
         Dashboard
-      </motion.span>
+      </motion.a>
+      <motion.a 
+        href="/worker-dashboard"
+        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Worker Dashboard
+      </motion.a>
       <motion.span 
         className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
         whileHover={{ scale: 1.1 }}

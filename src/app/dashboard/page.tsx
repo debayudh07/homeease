@@ -73,6 +73,15 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">HomeEase User Dashboard</h1>
           <nav>
+            
+            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">
+              <a href="/profile-user">
+                <Avatar>
+                  <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+              </a>
+            </Button>
             <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Logout</Button>
           </nav>
         </div>
