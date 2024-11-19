@@ -68,13 +68,13 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
 };
 
   return (
-    <div className="min-h-screen bg-white text-orange-500">
+    <div className="min-h-screen bg-white text-red-500">
       <header className="bg-white shadow-md p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">HomeEase User Dashboard</h1>
           <nav>
             
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">
               <a href="/profile-user">
                 <Avatar>
                   <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
@@ -82,7 +82,7 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
                 </Avatar>
               </a>
             </Button>
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Logout</Button>
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">Logout</Button>
           </nav>
         </div>
       </header>
@@ -112,20 +112,20 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
                       <CardDescription>{job.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <DollarSign className="w-4 h-4" />
-                        ${job.price}
+                        Rs.{job.price}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <MapPin className="w-4 h-4" />
                         {job.location}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <Clock className="w-4 h-4" />
                         Status: {job.status}
                       </div>
                       {job.worker && (
-                        <div className="flex items-center gap-2 text-sm text-orange-600">
+                        <div className="flex items-center gap-2 text-sm text-red-600">
                           <User className="w-4 h-4" />
                           Worker: {job.worker.name} (Rating: {job.worker.rating})
                         </div>
@@ -151,7 +151,7 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
               <CardContent>
                 <form onSubmit={handlePostJob} className="space-y-4">
                   <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-orange-600 mb-1">Job Title</label>
+                    <label htmlFor="title" className="block text-sm font-medium text-red-600 mb-1">Job Title</label>
                     <Input 
                       id="title" 
                       name="title" 
@@ -161,7 +161,7 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-orange-600 mb-1">Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium text-red-600 mb-1">Description</label>
                     <Textarea 
                       id="description" 
                       name="description" 
@@ -171,7 +171,7 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="price" className="block text-sm font-medium text-orange-600 mb-1">Price ($)</label>
+                    <label htmlFor="price" className="block text-sm font-medium text-red-600 mb-1">Price ($)</label>
                     <Input 
                       id="price" 
                       name="price" 
@@ -182,7 +182,7 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="location" className="block text-sm font-medium text-orange-600 mb-1">Location</label>
+                    <label htmlFor="location" className="block text-sm font-medium text-red-600 mb-1">Location</label>
                     <Input 
                       id="location" 
                       name="location" 
@@ -199,8 +199,8 @@ const handlePostJob = (e: React.FormEvent<HTMLFormElement>) => {
         </Tabs>
       </main>
 
-      <footer className="mt-12 py-6 text-center text-orange-400">
-        <p>&copy; 2023 HomeEase. All rights reserved.</p>
+      <footer className="mt-12 py-6 text-center text-red-400">
+        <p>&copy; 2024 HomeEase. All rights reserved.</p>
       </footer>
     </div>
   )

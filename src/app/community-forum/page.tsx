@@ -21,9 +21,9 @@ const fadeIn = {
 
 export default function CommunityForum() {
   const [workers, setWorkers] = useState([
-    { id: 1, name: 'Ramesh Bhopadhike', avatar: '/placeholder.svg?height=40&width=40', rating: 4.8, skills: ['Cleaning', 'Organizing'], location: 'New York, NY' },
-    { id: 2, name: 'Umesh Reshamiya', avatar: '/placeholder.svg?height=40&width=40', rating: 4.5, skills: ['Plumbing', 'Electrical'], location: 'Los Angeles, CA' },
-    { id: 3, name: 'Sutiya Kamaral', avatar: '/placeholder.svg?height=40&width=40', rating: 4.9, skills: ['Gardening', 'Landscaping'], location: 'Chicago, IL' },
+    { id: 1, name: 'Ramesh Sharma', avatar: 'https://media.istockphoto.com/id/178583962/photo/indian-man.jpg?s=1024x1024&w=is&k=20&c=aIIe7vlepZnXwF60pWXca2PzxRKoAqk6WEaWJLFD2vA=', rating: 4.8, skills: ['Cleaning', 'Organizing'], location: 'Mumbai,MU' },
+    { id: 2, name: 'Sneha Aggarwal', avatar: 'https://www.smilefoundationindia.org/blog/wp-content/uploads/2022/11/158261322_4329644477059487_5595975755639872047_o-1024x689.jpg', rating: 4.5, skills: ['Plumbing', 'Electrical'], location: 'Kolkata,CU' },
+    { id: 3, name: 'Diptish Kamaral', avatar: 'https://c.stocksy.com/a/dTW500/z9/1316485.jpg', rating: 4.9, skills: ['Gardening', 'Landscaping'], location: 'Kolkata, CU' },
   ])
 
   const [selectedWorker, setSelectedWorker] = useState<{ id: number; name: string; avatar: string; rating: number; skills: string[]; location: string } | null>(null)
@@ -58,7 +58,7 @@ export default function CommunityForum() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-orange-500">
+    <div className="min-h-screen bg-white text-red-500">
       <header className="bg-white shadow-md p-4">
         <div className="container mx-auto">
           <h1 className="text-2xl font-bold">HomeEase Community Forum</h1>
@@ -141,7 +141,7 @@ export default function CommunityForum() {
                           <h3 className="font-semibold">Skills</h3>
                           <div className="flex flex-wrap gap-2">
                             {selectedWorker.skills.map(skill => (
-                              <span key={skill} className="bg-orange-100 text-orange-800 px-2 py-1 rounded">{skill}</span>
+                              <span key={skill} className="bg-red-100 text-red-800 px-2 py-1 rounded">{skill}</span>
                             ))}
                           </div>
                         </div>
@@ -192,8 +192,8 @@ export default function CommunityForum() {
         </div>
       </main>
 
-      <footer className="mt-12 py-6 text-center text-orange-400">
-        <p>&copy; 2023 HomeEase. All rights reserved.</p>
+      <footer className="mt-12 py-6 text-center text-red-400">
+        <p>&copy; 2024 HomeEase. All rights reserved.</p>
       </footer>
     </div>
   )

@@ -52,13 +52,13 @@ export default function WorkerProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-orange-500">
+    <div className="min-h-screen bg-white text-red-500">
       <header className="bg-white shadow-md p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">HomeEase Worker Profile</h1>
           <nav>
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Dashboard</Button>
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Logout</Button>
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">Dashboard</Button>
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">Logout</Button>
           </nav>
         </div>
       </header>
@@ -122,7 +122,7 @@ export default function WorkerProfile() {
                   </>
                 ) : (
                   <>
-                    <p className="text-orange-600">{profile.bio}</p>
+                    <p className="text-red-600">{profile.bio}</p>
                     <div className="flex flex-wrap gap-2">
                       {profile.skills.map(skill => (
                         <Badge key={skill} variant="secondary">{skill}</Badge>
@@ -169,7 +169,7 @@ export default function WorkerProfile() {
         </motion.div>
       </main>
 
-      <footer className="mt-12 py-6 text-center text-orange-400">
+      <footer className="mt-12 py-6 text-center text-red-400">
         <p>&copy; 2023 HomeEase. All rights reserved.</p>
       </footer>
     </div>

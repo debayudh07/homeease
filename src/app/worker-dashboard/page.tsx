@@ -58,12 +58,12 @@ export default function WorkerDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-orange-500">
+    <div className="min-h-screen bg-white text-red-500">
       <header className="bg-white shadow-md p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">HomeEase Worker Dashboard</h1>
           <nav>
-          <Button variant="ghost" className="text-orange-500 hover:text-orange-600">
+          <Button variant="ghost" className="text-red-500 hover:text-red-600">
               <a href="/profile-user">
                 <Avatar>
                   <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
@@ -71,7 +71,7 @@ export default function WorkerDashboard() {
                 </Avatar>
               </a>
             </Button>
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Logout</Button>
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">Logout</Button>
           </nav>
         </div>
       </header>
@@ -101,19 +101,19 @@ export default function WorkerDashboard() {
                       <CardDescription>{job.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <DollarSign className="w-4 h-4" />
-                        ${job.price} {job.suggestedPrice && `(Suggested: $${job.suggestedPrice})`}
+                        Rs.{job.price} {job.suggestedPrice && `(Suggested: Rs.${job.suggestedPrice})`}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <Clock className="w-4 h-4" />
                         {job.estimatedTime} {job.suggestedTime && `(Suggested: ${job.suggestedTime})`}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <MapPin className="w-4 h-4" />
                         {job.location}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600">
+                      <div className="flex items-center gap-2 text-sm text-red-600">
                         <User className="w-4 h-4" />
                         Posted by: {job.poster}
                       </div>
@@ -137,7 +137,7 @@ export default function WorkerDashboard() {
                             <div className="grid gap-4 py-4">
                               <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="suggestedPrice" className="text-right">
-                                  Price ($)
+                                  Price (Rs.)
                                 </Label>
                                 <Input
                                   id="suggestedPrice"
@@ -193,19 +193,19 @@ export default function WorkerDashboard() {
                       <CardDescription>{job.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <DollarSign className="w-4 h-4" />
                         ${job.price}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <Clock className="w-4 h-4" />
                         {job.estimatedTime}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                         <MapPin className="w-4 h-4" />
                         {job.location}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-orange-600">
+                      <div className="flex items-center gap-2 text-sm text-red-600">
                         <User className="w-4 h-4" />
                         Posted by: {job.poster}
                       </div>
@@ -221,7 +221,7 @@ export default function WorkerDashboard() {
         </Tabs>
       </main>
 
-      <footer className="mt-12 py-6 text-center text-orange-400">
+      <footer className="mt-12 py-6 text-center text-red-400">
         <p>&copy; 2023 HomeEase. All rights reserved.</p>
       </footer>
     </div>

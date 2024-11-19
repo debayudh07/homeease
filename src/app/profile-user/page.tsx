@@ -47,13 +47,13 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-orange-500">
+    <div className="min-h-screen bg-white text-red-500">
       <header className="bg-white shadow-md p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">HomeEase User Profile</h1>
           <nav>
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Dashboard</Button>
-            <Button variant="ghost" className="text-orange-500 hover:text-orange-600">Logout</Button>
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">Dashboard</Button>
+            <Button variant="ghost" className="text-red-500 hover:text-red-600">Logout</Button>
           </nav>
         </div>
       </header>
@@ -133,15 +133,15 @@ export default function UserProfile() {
                             <CardDescription>{job.description}</CardDescription>
                           </CardHeader>
                           <CardContent>
-                            <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                            <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                               <DollarSign className="w-4 h-4" />
                               ${job.price}
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-orange-600 mb-2">
+                            <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
                               <Clock className="w-4 h-4" />
                               {job.estimatedTime}
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-orange-600">
+                            <div className="flex items-center gap-2 text-sm text-red-600">
                               <MapPin className="w-4 h-4" />
                               {job.location}
                             </div>
@@ -162,7 +162,7 @@ export default function UserProfile() {
         </div>
       </main>
 
-      <footer className="mt-12 py-6 text-center text-orange-400">
+      <footer className="mt-12 py-6 text-center text-red-400">
         <p>&copy; 2023 HomeEase. All rights reserved.</p>
       </footer>
     </div>

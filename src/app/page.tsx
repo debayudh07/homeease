@@ -16,6 +16,7 @@ import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users, Menu, X } 
 import { motion, useAnimation } from 'framer-motion'
 
 import { useEffect } from 'react';
+import ShuffleHero from '@/components/ui/hero'
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -56,9 +57,9 @@ export default function HomePage() {
   }, [controls])
 
   return (
-    <div className="min-h-screen bg-white text-orange-500">
+    <div className="min-h-screen bg-white text-red-500">
     <div className="h-16"></div> {/* Spacer for fixed header */}
-    <header className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-sm transition-all duration-300 ease-in-out md:px-6 lg:px-8 text-orange-500">
+    <header className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-sm transition-all duration-300 ease-in-out md:px-6 lg:px-8 text-red-500">
       <motion.h1 
         className="text-2xl font-bold"
         initial={{ x: -20, opacity: 0 }}
@@ -96,46 +97,7 @@ export default function HomePage() {
       
 
       <main className="container mx-auto px-4 py-8">
-        <motion.section 
-          className="text-center mb-12"
-          initial="initial"
-          animate="animate"
-          variants={stagger}
-        >
-          <motion.h2 
-            className="text-4xl font-bold mb-4"
-            variants={fadeIn}
-          >
-            Welcome to HomeEase
-          </motion.h2>
-          <motion.p 
-            className="text-xl mb-6"
-            variants={fadeIn}
-          >
-            Connect with local helpers for your home chores
-          </motion.p>
-          <motion.div 
-            className="flex justify-center space-x-4"
-            variants={fadeIn}
-          >
-            <motion.a 
-              href="/dashboard"
-              className="bg-orange-500 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-orange-600 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Post a Job
-            </motion.a>
-            <motion.a 
-              href="/worker-dashboard"
-              className="bg-orange-600 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-orange-700 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Find Work
-            </motion.a>
-          </motion.div>
-        </motion.section>
+        <ShuffleHero />
 
         <motion.section 
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
@@ -144,35 +106,35 @@ export default function HomePage() {
           animate="animate"
         >
           <motion.div variants={fadeIn}>
-            <Card className="bg-orange-100 h-full">
+            <Card className="bg-red-100 h-full">
               <CardHeader>
-                <Briefcase className="w-10 h-10 text-orange-400 mb-2" />
-                <CardTitle className="text-orange-500">Post Jobs</CardTitle>
+                <Briefcase className="w-10 h-10 text-red-400 mb-2" />
+                <CardTitle className="text-red-500">Post Jobs</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-orange-600">Easily post your home chores and find reliable help.</p>
+                <p className="text-red-600">Easily post your home chores and find reliable help.</p>
               </CardContent>
             </Card>
           </motion.div>
           <motion.div variants={fadeIn}>
-            <Card className="bg-orange-100 h-full">
+            <Card className="bg-red-100 h-full">
               <CardHeader>
-                <Search className="w-10 h-10 text-orange-400 mb-2" />
-                <CardTitle className="text-orange-500">Find Work</CardTitle>
+                <Search className="w-10 h-10 text-red-400 mb-2" />
+                <CardTitle className="text-red-500">Find Work</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-orange-600">Browse and apply for various home chore opportunities.</p>
+                <p className="text-red-600">Browse and apply for various home chore opportunities.</p>
               </CardContent>
             </Card>
           </motion.div>
           <motion.div variants={fadeIn}>
-            <Card className="bg-orange-100 h-full">
+            <Card className="bg-red-100 h-full">
               <CardHeader>
-                <CheckCircle className="w-10 h-10 text-orange-400 mb-2" />
-                <CardTitle className="text-orange-500">Get Things Done</CardTitle>
+                <CheckCircle className="w-10 h-10 text-red-400 mb-2" />
+                <CardTitle className="text-red-500">Get Things Done</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-orange-600">Complete tasks efficiently and earn great reviews.</p>
+                <p className="text-red-600">Complete tasks efficiently and earn great reviews.</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -191,18 +153,18 @@ export default function HomePage() {
             Featured Job
           </motion.h3>
           <motion.div variants={fadeIn}>
-            <Card className="bg-orange-100">
+            <Card className="bg-red-100">
               <CardHeader>
-                <CardTitle className="text-orange-500">House Cleaning Needed</CardTitle>
-                <p className="text-orange-400">Posted by John D. • 2 hours ago</p>
+                <CardTitle className="text-red-500">House Cleaning Needed</CardTitle>
+                <p className="text-red-400">Posted by John D. • 2 hours ago</p>
               </CardHeader>
               <CardContent>
-                <p className="mb-4 text-orange-600">Looking for someone to clean a 2-bedroom apartment. Tasks include vacuuming, dusting, and bathroom cleaning.</p>
-                <div className="flex items-center gap-2 text-orange-400">
+                <p className="mb-4 text-red-600">Looking for someone to clean a 2-bedroom apartment. Tasks include vacuuming, dusting, and bathroom cleaning.</p>
+                <div className="flex items-center gap-2 text-red-400">
                   <Home className="w-5 h-5" />
                   <span>123 Main St, Anytown, USA</span>
                 </div>
-                <p className="mt-4 font-bold text-orange-500">$50</p>
+                <p className="mt-4 font-bold text-red-500">$50</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -228,25 +190,25 @@ export default function HomePage() {
               className="flex flex-col items-center text-center"
               variants={fadeIn}
             >
-              <ThumbsUp className="w-12 h-12 text-orange-400 mb-2" />
+              <ThumbsUp className="w-12 h-12 text-red-400 mb-2" />
               <h4 className="text-xl font-semibold mb-2">Trusted Service</h4>
-              <p className="text-orange-600">Our helpers are vetted and reviewed by the community.</p>
+              <p className="text-red-600">Our helpers are vetted and reviewed by the community.</p>
             </motion.div>
             <motion.div 
               className="flex flex-col items-center text-center"
               variants={fadeIn}
             >
-              <Users className="w-12 h-12 text-orange-400 mb-2" />
+              <Users className="w-12 h-12 text-red-400 mb-2" />
               <h4 className="text-xl font-semibold mb-2">Large Network</h4>
-              <p className="text-orange-600">Connect with thousands of helpers in your area.</p>
+              <p className="text-red-600">Connect with thousands of helpers in your area.</p>
             </motion.div>
             <motion.div 
               className="flex flex-col items-center text-center"
               variants={fadeIn}
             >
-              <Star className="w-12 h-12 text-orange-400 mb-2" />
+              <Star className="w-12 h-12 text-red-400 mb-2" />
               <h4 className="text-xl font-semibold mb-2">Quality Assurance</h4>
-              <p className="text-orange-600">We ensure high-quality service with our rating system.</p>
+              <p className="text-red-600">We ensure high-quality service with our rating system.</p>
             </motion.div>
           </motion.div>
         </motion.section>
@@ -263,7 +225,7 @@ export default function HomePage() {
           >
             How It Works
           </motion.h3>
-          <div className="text-orange-600 text-lg">
+          <div className="text-red-600 text-lg">
             <TypewriterEffect />
           </div>
         </motion.section>
@@ -276,16 +238,16 @@ export default function HomePage() {
         >
           <h3 className="text-2xl font-bold mb-4">What Our Users Say</h3>
           <div className="grid sm:grid-cols-2 gap-8">
-            <Card className="bg-orange-100">
+            <Card className="bg-red-100">
               <CardContent className="pt-6">
-                <p className="text-orange-600 italic">"HomeEase made it so easy to find help for my home projects. Highly recommended!"</p>
-                <p className="text-orange-400 mt-4">- Sarah M., Homeowner</p>
+                <p className="text-red-600 italic">"HomeEase made it so easy to find help for my home projects. Highly recommended!"</p>
+                <p className="text-red-400 mt-4">- Sarah M., Homeowner</p>
               </CardContent>
             </Card>
-            <Card className="bg-orange-100">
+            <Card className="bg-red-100">
               <CardContent className="pt-6">
-                <p className="text-orange-600 italic">"I've been able to earn extra income and help my community. It's a win-win!"</p>
-                <p className="text-orange-400 mt-4">- Mike T., Helper</p>
+                <p className="text-red-600 italic">"I've been able to earn extra income and help my community. It's a win-win!"</p>
+                <p className="text-red-400 mt-4">- Mike T., Helper</p>
               </CardContent>
             </Card>
           </div>
@@ -299,13 +261,13 @@ export default function HomePage() {
         >
           <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
           <motion.div 
-            className="bg-orange-100 p-8 rounded-lg text-center"
+            className="bg-red-100 p-8 rounded-lg text-center"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <p className="text-xl mb-4">Join HomeEase today and experience the easiest way to manage your home chores!</p>
             <motion.span 
-              className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-orange-600 transition-colors"
+              className="inline-block bg-red-500 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-red-600 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -316,8 +278,8 @@ export default function HomePage() {
       </main>
      
 
-      <footer className="mt-12 py-6 text-center text-orange-400">
-        <p>&copy; 2023 HomeEase. All rights reserved.</p>
+      <footer className="mt-12 py-6 text-center text-red-400">
+        <p>&copy; 2024 HomeEase. All rights reserved by 4Teens.</p>
       </footer>
       <style jsx>{`
         @media (max-width: 640px) {
@@ -340,7 +302,7 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
     <>
       <motion.a 
         href="/dashboard"
-        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -348,7 +310,7 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
       </motion.a>
       <motion.a 
         href="/worker-dashboard"
-        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
@@ -356,14 +318,14 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
       </motion.a>
       <motion.a 
         href="/community-forum"
-        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
         Community Forum
       </motion.a>
       <motion.span 
-        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsLoginOpen(true)}
@@ -371,7 +333,7 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
         Login
       </motion.span>
       <motion.span 
-        className="text-orange-400 cursor-pointer hover:text-orange-600 transition-colors"
+        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsSignUpOpen(true)}
