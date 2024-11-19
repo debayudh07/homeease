@@ -325,6 +325,16 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
       >
         Community Forum
       </motion.a>
+
+      <motion.a 
+        href="/pricing"
+        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Pricing
+      </motion.a>
+
       <motion.span 
         className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
         whileHover={{ scale: 1.1 }}
