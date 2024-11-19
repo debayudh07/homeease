@@ -115,6 +115,7 @@ export default function HomePage() {
                 <p className="text-red-600">Easily post your home chores and find reliable help.</p>
               </CardContent>
             </Card>
+            
           </motion.div>
           <motion.div variants={fadeIn}>
             <Card className="bg-red-100 h-full">
