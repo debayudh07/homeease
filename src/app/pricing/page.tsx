@@ -36,7 +36,7 @@ export default function PricingPage() {
     {
       name: 'Basic',
       description: 'For occasional home service needs',
-      price: isAnnual ? 9.99 : 14.99,
+      price: isAnnual ? 0.99 : 8.99,
       features: [
         'Post up to 5 jobs per month',
         'Basic worker profiles',
@@ -52,7 +52,7 @@ export default function PricingPage() {
     {
       name: 'Pro',
       description: 'For regular home maintenance',
-      price: isAnnual ? 19.99 : 24.99,
+      price: isAnnual ? 1.99 : 9.99,
       features: [
         'Unlimited job postings',
         'Enhanced worker profiles',
@@ -69,7 +69,7 @@ export default function PricingPage() {
     {
       name: 'Premium',
       description: 'For frequent service requirements',
-      price: isAnnual ? 39.99 : 49.99,
+      price: isAnnual ? 19.99 : 29.99,
       features: [
         'Unlimited job postings',
         'Premium worker profiles',
