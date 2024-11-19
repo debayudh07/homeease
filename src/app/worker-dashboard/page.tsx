@@ -105,7 +105,7 @@ export default function WorkerDashboard() {
           <h1 className="text-xl md:text-2xl font-bold">HomeEase Worker Dashboard</h1>
           <nav className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" className="text-red-500 hover:text-red-600">
-              <a href="/profile-user" className="flex items-center">
+              <a href="/profile-worker" className="flex items-center">
                 <Avatar className="w-8 h-8 mr-2">
                   <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
                   <AvatarFallback>U</AvatarFallback>
