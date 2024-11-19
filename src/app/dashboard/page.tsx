@@ -1,8 +1,8 @@
 /* eslint-disable */
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Briefcase, DollarSign, MapPin, Clock, User, CheckCircle, XCircle } from 'lucide-react'
+import { Briefcase, DollarSign, MapPin, Clock, User, CheckCircle, XCircle, Menu, X } from 'lucide-react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -18,6 +18,12 @@ const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 }
+}
+
+const cardVariants = {
+  initial: { scale: 0.9, opacity: 0 },
+  animate: { scale: 1, opacity: 1 },
+  hover: { scale: 1.05, transition: { duration: 0.2 } }
 }
 
 interface Job {
@@ -50,6 +56,17 @@ export default function UserDashboard() {
   ])
 
   const [newJob, setNewJob] = useState<NewJob>({ title: '', description: '', price: '', location: '' })
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -81,68 +98,96 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-white text-red-500">
-      <header className="bg-white shadow-md p-4">
+      <header className="bg-white shadow-md p-4 sticky top-0 z-10">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">HomeEase User Dashboard</h1>
-          <nav>
+          <h1 className="text-xl md:text-2xl font-bold">HomeEase User Dashboard</h1>
+          <nav className="hidden md:flex items-center space-x-4">
             <Button variant="ghost" className="text-red-500 hover:text-red-600">
-              <a href="/profile-user">
-                <Avatar>
+              <a href="/profile-user" className="flex items-center">
+                <Avatar className="w-8 h-8 mr-2">
                   <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
+                Profile
               </a>
             </Button>
             <Button variant="ghost" className="text-red-500 hover:text-red-600">Logout</Button>
           </nav>
+          <Button variant="ghost" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X /> : <Menu />}
+          </Button>
         </div>
       </header>
 
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.nav
+            className="md:hidden bg-white shadow-md p-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <Button variant="ghost" className="w-full text-left mb-2">
+              <a href="/profile-user" className="flex items-center">
+                <Avatar className="w-8 h-8 mr-2">
+                  <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+                Profile
+              </a>
+            </Button>
+            <Button variant="ghost" className="w-full text-left">Logout</Button>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="myjobs" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="myjobs">My Jobs</TabsTrigger>
-            <TabsTrigger value="post">Post a Job</TabsTrigger>
+          <TabsList className="w-full flex">
+            <TabsTrigger value="myjobs" className="flex-1">My Jobs</TabsTrigger>
+            <TabsTrigger value="post" className="flex-1">Post a Job</TabsTrigger>
           </TabsList>
 
           <TabsContent value="myjobs">
             <motion.div 
-              className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
               initial="initial"
               animate="animate"
               variants={{ animate: { transition: { staggerChildren: 0.1 } } }}
             >
               {jobs.map(job => (
-                <motion.div key={job.id} variants={fadeIn}>
-                  <Card className="hover:shadow-lg transition-shadow duration-300">
+                <motion.div key={job.id} variants={cardVariants} whileHover="hover">
+                  <Card className="h-full flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                         <Briefcase className="w-5 h-5" />
                         {job.title}
                       </CardTitle>
-                      <CardDescription>{job.description}</CardDescription>
+                      <CardDescription className="text-sm md:text-base">{job.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
-                        <DollarSign className="w-4 h-4" />
-                        Rs.{job.price}
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
-                        <MapPin className="w-4 h-4" />
-                        {job.location}
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-red-600 mb-2">
-                        <Clock className="w-4 h-4" />
-                        Status: {job.status}
-                      </div>
-                      {job.worker && (
+                      <div className="flex flex-wrap gap-4">
                         <div className="flex items-center gap-2 text-sm text-red-600">
-                          <User className="w-4 h-4" />
-                          Worker: {job.worker.name} (Rating: {job.worker.rating})
+                          <DollarSign className="w-4 h-4" />
+                          Rs.{job.price}
                         </div>
-                      )}
+                        <div className="flex items-center gap-2 text-sm text-red-600">
+                          <MapPin className="w-4 h-4" />
+                          {job.location}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-red-600">
+                          <Clock className="w-4 h-4" />
+                          Status: {job.status}
+                        </div>
+                        {job.worker && (
+                          <div className="flex items-center gap-2 text-sm text-red-600">
+                            <User className="w-4 h-4" />
+                            Worker: {job.worker.name} (Rating: {job.worker.rating})
+                          </div>
+                        )}
+                      </div>
                     </CardContent>
-                    <CardFooter className="flex justify-between items-center">
+                    <CardFooter className="flex justify-between items-center mt-auto">
                       <Badge variant={job.status === 'Open' ? 'default' : job.status === 'In Progress' ? 'secondary' : 'outline'}>
                         {job.status}
                       </Badge>
@@ -185,7 +230,7 @@ export default function UserDashboard() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="price" className="block text-sm font-medium text-red-600 mb-1">Price ($)</label>
+                    <label htmlFor="price" className="block text-sm font-medium text-red-600 mb-1">Price (Rs.)</label>
                     <Input 
                       id="price" 
                       name="price" 
