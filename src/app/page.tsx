@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users, Menu, X, ArrowRight,  } from 'lucide-react'
+import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users, Menu, X, ArrowRight, Brush,Scissors,BathIcon ,Wrench} from 'lucide-react'
 import { motion, useAnimation } from 'framer-motion'
 
 import { useEffect } from 'react';
@@ -38,29 +38,33 @@ export default function HomePage() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   const popularServices = [
-    { icon: <Home className="w-8 h-8" />, title: "House Cleaning", price: "From $49" },
-    { icon: <Briefcase className="w-8 h-8" />, title: "Plumbing", price: "From $79" },
-    { icon: <Star className="w-8 h-8" />, title: "Electrical", price: "From $89" },
-    { icon: <CheckCircle className="w-8 h-8" />, title: "Painting", price: "From $199" },
+    { icon: <Home className="w-8 h-8" />, title: "House Cleaning", price: "From ₹3,499" },
+    { icon: <Briefcase className="w-8 h-8" />, title: "Plumbing", price: "From ₹5,799" },
+    { icon: <Star className="w-8 h-8" />, title: "Electrical", price: "From ₹6,499" },
+    { icon: <CheckCircle className="w-8 h-8" />, title: "Painting", price: "From ₹14,499" },
+    { icon: <Brush className="w-8 h-8" />, title: "Carpet Cleaning", price: "From ₹4,499" },
+    { icon: <Scissors className="w-8 h-8" />, title: "Lawn Mowing", price: "From ₹3,499" },
+    { icon: <BathIcon className="w-8 h-8" />, title: "Bathroom Cleaning", price: "From ₹5,199" },
+    { icon: <Wrench className="w-8 h-8" />, title: "Handyman Services", price: "From ₹6,999" },
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-950 via-purple-900 to-indigo-950">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-opacity-80 backdrop-blur-lg bg-indigo-950">
+        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
           <div className="flex items-center space-x-8">
-            <h1 className="text-2xl font-bold text-red-500">HomeEase</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">HomeEase</h1>
             <nav className="hidden md:flex space-x-6">
               <NavItems setIsLoginOpen={setIsLoginOpen} setIsSignUpOpen={setIsSignUpOpen} />
             </nav>
           </div>
           <div className="flex items-center space-x-4">
-            <Button variant="outline" onClick={() => setIsLoginOpen(true)}>Login</Button>
-            <Button onClick={() => setIsSignUpOpen(true)}>Sign Up</Button>
-            <Button variant="ghost" className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <Button className="bg-transparent border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white transition-all duration-300" onClick={() => setIsLoginOpen(true)}>Login</Button>
+            <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-all duration-300" onClick={() => setIsSignUpOpen(true)}>Sign Up</Button>
+            <Button variant="ghost" className="md:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               <Menu className="h-6 w-6" />
             </Button>
           </div>
@@ -69,23 +73,49 @@ export default function HomePage() {
 
       <main>
         {/* Hero Section */}
-        <section className="pt-24 pb-12 bg-gradient-to-b from-red-50 to-white">
-          <div className="container mx-auto px-4">
+        <section className="pt-32 pb-16 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/api/placeholder/1920/1080')] opacity-10"></div>
+          <motion.div 
+            className="absolute top-20 left-1/4 w-2 h-2 bg-purple-400 rounded-full"
+            animate={{ 
+              scale: [1, 2, 1],
+              opacity: [1, 0.5, 1]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity
+            }}
+          />
+          <motion.div 
+            className="absolute top-40 right-1/3 w-3 h-3 bg-pink-400 rounded-full"
+            animate={{ 
+              scale: [1, 1.5, 1],
+              opacity: [1, 0.5, 1]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity
+            }}
+          />
+          <div className="container mx-auto px-4 relative">
             <div className="max-w-2xl">
               <motion.h2 
-                className="text-4xl md:text-5xl font-bold text-red-500 mb-4"
+                className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                Home Services, On Demand
+                Your Home Services,{" "}
+                <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  In the Digital Age
+                </span>
               </motion.h2>
               <motion.p 
-                className="text-xl text-red-400 mb-8"
+                className="text-xl text-purple-200 mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Quality home services, delivered to your doorstep
+                Experience the future of home services with AI-powered matching and real-time tracking
               </motion.p>
               <motion.div 
                 className="flex space-x-4"
@@ -93,33 +123,38 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <Button size="lg" className="bg-red-500 hover:bg-red-600">Book a Service</Button>
-                <Button size="lg" variant="outline" className="text-red-500">Become a Partner</Button>
+                <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-6 text-lg">
+                  Launch App
+                </Button>
+                <Button className="bg-transparent border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-6 text-lg">
+                  Watch Demo
+                </Button>
               </motion.div>
             </div>
           </div>
         </section>
 
         {/* Popular Services */}
-        <section className="py-12">
+        <section className="py-16">
           <div className="container mx-auto px-4">
-            <h3 className="text-2xl font-bold text-red-500 mb-8">Popular Services</h3>
+            <h3 className="text-3xl font-bold text-white mb-2">Popular Services</h3>
+            <p className="text-purple-300 mb-8">Discover our most requested services for your home</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {popularServices.map((service, index) => (
                 <motion.div
                   key={index}
                   className="group cursor-pointer"
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ y: -5 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card className="text-center p-6 bg-red-50 hover:bg-red-100 transition-colors">
-                    <div className="text-red-400 mb-4 group-hover:text-red-500 transition-colors">
+                  <Card className="bg-indigo-900/50 backdrop-blur-lg border border-purple-500/20 p-6 hover:border-purple-500 transition-all duration-300">
+                    <div className="text-purple-400 mb-4 group-hover:text-pink-400 transition-colors">
                       {service.icon}
                     </div>
-                    <h4 className="font-semibold text-red-500 mb-2">{service.title}</h4>
-                    <p className="text-red-400">{service.price}</p>
+                    <h4 className="font-bold text-white mb-2">{service.title}</h4>
+                    <p className="text-purple-300">{service.price}</p>
                   </Card>
                 </motion.div>
               ))}
@@ -127,170 +162,81 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Why Choose Us */}
-        <section className="py-12 bg-red-50">
-          <div className="container mx-auto px-4">
-            <h3 className="text-2xl font-bold text-red-500 mb-8">Why Choose HomeEase?</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <motion.div 
-                className="flex items-start space-x-4"
-                variants={fadeIn}
-                initial="initial"
-                animate="animate"
-              >
-                <Users className="w-8 h-8 text-red-400 flex-shrink-0" />
-                <div>
-                  <h4 className="font-semibold text-red-500 mb-2">Verified Professionals</h4>
-                  <p className="text-red-400">Background-checked and trained professionals at your service</p>
-                </div>
-              </motion.div>
-              <motion.div 
-                className="flex items-start space-x-4"
-                variants={fadeIn}
-                initial="initial"
-                animate="animate"
-              >
-                <CheckCircle className="w-8 h-8 text-red-400 flex-shrink-0" />
-                <div>
-                  <h4 className="font-semibold text-red-500 mb-2">Insured Services</h4>
-                  <p className="text-red-400">Your home and services are covered by insurance</p>
-                </div>
-              </motion.div>
-              <motion.div 
-                className="flex items-start space-x-4"
-                variants={fadeIn}
-                initial="initial"
-                animate="animate"
-              >
-                <Star className="w-8 h-8 text-red-400 flex-shrink-0" />
-                <div>
-                  <h4 className="font-semibold text-red-500 mb-2">Satisfaction Guaranteed</h4>
-                  <p className="text-red-400">100% satisfaction or we'll make it right</p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Featured Services */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-2xl font-bold text-red-500">Featured Services</h3>
-              <Button variant="ghost" className="text-red-500">
-                View All <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-            <div className="grid md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((item) => (
-                <motion.div
-                  key={item}
-                  className="group cursor-pointer"
-                  whileHover={{ y: -5 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: item * 0.1 }}
-                >
-                  <Card className="overflow-hidden">
-                    <div className="h-48 bg-red-100 relative">
-                      <div className="absolute bottom-4 left-4">
-                        <Badge variant="secondary" className="bg-white text-red-500">
-                          Most Popular
-                        </Badge>
-                      </div>
-                    </div>
-                    <CardContent className="p-4">
-                      <h4 className="font-semibold text-red-500 mb-2">Deep House Cleaning</h4>
-                      <p className="text-red-400 mb-4">Professional cleaning service for your entire home</p>
-                      <div className="flex justify-between items-center">
-                        <span className="font-bold text-red-500">From $99</span>
-                        <Button variant="ghost" size="sm" className="text-red-500">
-                          Book Now
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Download App Section */}
-        <section className="py-12 bg-red-50">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between">
-              <div className="md:w-1/2 mb-8 md:mb-0">
-                <h3 className="text-3xl font-bold text-red-500 mb-4">Get the HomeEase App</h3>
-                <p className="text-red-400 mb-6">Book services on the go with our mobile app</p>
-                <div className="flex space-x-4">
-                  <Button variant="outline" className="text-red-500">
-                    App Store
-                  </Button>
-                  <Button variant="outline" className="text-red-500">
-                    Google Play
-                  </Button>
-                </div>
+        {/* Special Section: Features of the App */}
+        <section className="bg-indigo-800 py-16">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-3xl font-bold text-white mb-6">Why Choose HomeEase?</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h4 className="text-xl font-semibold mb-4">AI-Powered Service Matching</h4>
+                <p className="text-gray-700">Our AI algorithm ensures you find the best professionals based on your needs, preferences, and location.</p>
               </div>
-              <div className="md:w-1/2">
-                <div className="bg-red-100 h-64 rounded-lg"></div>
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h4 className="text-xl font-semibold mb-4">Real-Time Tracking</h4>
+                <p className="text-gray-700">Track your service progress and get live updates on your home service requests, all from the app.</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg">
+                <h4 className="text-xl font-semibold mb-4">Affordable Pricing</h4>
+                <p className="text-gray-700">Get high-quality services at competitive prices, starting from just ₹3,499 for house cleaning.</p>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Testimonials Section */}
+        <section className="bg-indigo-900 py-16">
+          <div className="container mx-auto px-4 text-center">
+            <h3 className="text-3xl font-bold text-white mb-6">Customer Testimonials</h3>
+            <div className="flex space-x-8 justify-center">
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs">
+                <p className="text-gray-700 mb-4">"The home cleaning service was excellent! My house looks brand new. Highly recommended!"</p>
+                <p className="font-semibold text-indigo-800">Anita Sharma</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs">
+                <p className="text-gray-700 mb-4">"Great experience with their plumbing service. The technician was quick and professional."</p>
+                <p className="font-semibold text-indigo-800">Rajesh Kumar</p>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-lg max-w-xs">
+                <p className="text-gray-700 mb-4">"I used HomeEase for my lawn care needs. The team was professional and the results were amazing!"</p>
+                <p className="font-semibold text-indigo-800">Meera Patel</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <h3 className="text-3xl font-bold text-white mb-6">Frequently Asked Questions</h3>
+            <div className="space-y-6">
+              <div className="text-white">
+                <h4 className="font-semibold">How do I book a service?</h4>
+                <p className="text-purple-300">You can easily book a service through the HomeEase app by selecting the service, preferred time, and location.</p>
+              </div>
+              <div className="text-white">
+                <h4 className="font-semibold">What if I need to cancel my booking?</h4>
+                <p className="text-purple-300">You can cancel your booking anytime before the scheduled time directly from the app, with no extra charges.</p>
+              </div>
+              <div className="text-white">
+                <h4 className="font-semibold">Are the service providers verified?</h4>
+                <p className="text-purple-300">Yes, all our service providers are carefully vetted and verified for safety and professionalism.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <AuthDialogs 
+          isLoginOpen={isLoginOpen} 
+          setIsLoginOpen={setIsLoginOpen} 
+          isSignUpOpen={isSignUpOpen} 
+          setIsSignUpOpen={setIsSignUpOpen} 
+        />
       </main>
-
-      <footer className="bg-red-50 py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h4 className="font-bold text-red-500 mb-4">About HomeEase</h4>
-              <ul className="space-y-2 text-red-400">
-                <li>About Us</li>
-                <li>Terms & Conditions</li>
-                <li>Privacy Policy</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-red-500 mb-4">For Customers</h4>
-              <ul className="space-y-2 text-red-400">
-                <li>Book a Service</li>
-                <li>Our Services</li>
-                <li>Safety & Insurance</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-red-500 mb-4">For Partners</h4>
-              <ul className="space-y-2 text-red-400">
-                <li>Become a Partner</li>
-                <li>Partner Success Stories</li>
-                <li>Partner Support</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-red-500 mb-4">Connect With Us</h4>
-              <ul className="space-y-2 text-red-400">
-                <li>Blog</li>
-                <li>Facebook</li>
-                <li>Twitter</li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-red-100 text-center text-red-400">
-            <p>&copy; 2024 HomeEase. All rights reserved by 4Teens.</p>
-          </div>
-        </div>
-      </footer>
-
-      <AuthDialogs 
-        isLoginOpen={isLoginOpen} 
-        setIsLoginOpen={setIsLoginOpen} 
-        isSignUpOpen={isSignUpOpen} 
-        setIsSignUpOpen={setIsSignUpOpen} 
-      />
     </div>
   );
 }
+
+
 
 
 function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.Dispatch<React.SetStateAction<boolean>>, setIsSignUpOpen: React.Dispatch<React.SetStateAction<boolean>> }) {

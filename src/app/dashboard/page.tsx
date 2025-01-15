@@ -16,7 +16,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 
-
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -102,21 +101,23 @@ export default function UserDashboard() {
   };
 
   const handlePayment = () => {
-    // Add your payment logic here
     setIsPaymentOpen(false);
     toast.success('Payment successful!', {
       icon: <CheckCircle className="h-4 w-4 text-green-500" />
     });
   };
 
-
   return (
-    <div className="min-h-screen bg-white text-red-500">
-      <header className="bg-white shadow-md p-4 sticky top-0 z-10">
+    <div className="min-h-screen bg-gradient-to-br from-purple-800 via-indigo-900 to-black text-white relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute w-full h-full bg-[radial-gradient(circle,_rgba(255,255,255,0.05)_0%,_rgba(0,0,0,0)_70%)] animate-pulse" />
+      </div>
+
+      <header className="bg-opacity-80 backdrop-blur-md shadow-md p-4 sticky top-0 z-10">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-xl md:text-2xl font-bold">HomeEase User Dashboard</h1>
+          <h1 className="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400">User Dashboard</h1>
           <nav className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-red-500 hover:text-red-600">
+            <Button variant="ghost" className="hover:text-pink-400">
               <a href="/profile-user" className="flex items-center">
                 <Avatar className="w-8 h-8 mr-2">
                   <AvatarImage src="/path/to/profile-image.jpg" alt="Profile" />
@@ -125,7 +126,7 @@ export default function UserDashboard() {
                 Profile
               </a>
             </Button>
-            <Button variant="ghost" className="text-red-500 hover:text-red-600">Logout</Button>
+            <Button variant="ghost" className="hover:text-pink-400">Logout</Button>
           </nav>
           <Button variant="ghost" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X /> : <Menu />}
@@ -136,7 +137,7 @@ export default function UserDashboard() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.nav
-            className="md:hidden bg-white shadow-md p-4"
+            className="md:hidden bg-opacity-80 backdrop-blur-md p-4"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -157,9 +158,9 @@ export default function UserDashboard() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="myjobs" className="space-y-4">
-          <TabsList className="w-full flex">
-            <TabsTrigger value="myjobs" className="flex-1">My Jobs</TabsTrigger>
-            <TabsTrigger value="post" className="flex-1">Post a Job</TabsTrigger>
+          <TabsList className="w-full flex bg-opacity-50 backdrop-blur-md">
+            <TabsTrigger value="myjobs" className="flex-1 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400">My Jobs</TabsTrigger>
+            <TabsTrigger value="post" className="flex-1 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400">Post a Job</TabsTrigger>
           </TabsList>
 
           <TabsContent value="myjobs">
@@ -171,30 +172,30 @@ export default function UserDashboard() {
             >
               {jobs.map(job => (
                 <motion.div key={job.id} variants={cardVariants} whileHover="hover">
-                  <Card className="h-full flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
+                  <Card className="h-full flex flex-col justify-between bg-opacity-50 backdrop-blur-md hover:shadow-lg transition-shadow duration-300">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                      <CardTitle className="flex items-center gap-2 text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400">
                         <Briefcase className="w-5 h-5" />
                         {job.title}
                       </CardTitle>
-                      <CardDescription className="text-sm md:text-base">{job.description}</CardDescription>
+                      <CardDescription className="text-sm md:text-base text-white/90">{job.description}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="flex flex-wrap gap-4">
-                        <div className="flex items-center gap-2 text-sm text-red-600">
+                        <div className="flex items-center gap-2 text-sm text-pink-400">
                           <DollarSign className="w-4 h-4" />
                           Rs.{job.price}
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-red-600">
+                        <div className="flex items-center gap-2 text-sm text-pink-400">
                           <MapPin className="w-4 h-4" />
                           {job.location}
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-red-600">
+                        <div className="flex items-center gap-2 text-sm text-pink-400">
                           <Clock className="w-4 h-4" />
                           Status: {job.status}
                         </div>
                         {job.worker && (
-                          <div className="flex items-center gap-2 text-sm text-red-600">
+                          <div className="flex items-center gap-2 text-sm text-pink-400">
                             <User className="w-4 h-4" />
                             Worker: {job.worker.name} (Rating: {job.worker.rating})
                           </div>
@@ -202,7 +203,7 @@ export default function UserDashboard() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between items-center mt-auto">
-                      <Badge variant={job.status === 'Open' ? 'default' : job.status === 'In Progress' ? 'secondary' : 'outline'}>
+                      <Badge variant={job.status === 'Open' ? 'default' : job.status === 'In Progress' ? 'secondary' : 'outline'} className="bg-gradient-to-r from-pink-500 to-purple-400 text-white">
                         {job.status}
                       </Badge>
                       <div className="flex gap-2">
@@ -211,14 +212,14 @@ export default function UserDashboard() {
                             e.stopPropagation();
                             setSelectedJob(job);
                             setIsPaymentOpen(true);
-                          }}>
+                          }} className="bg-gradient-to-r from-pink-500 to-purple-400 hover:opacity-90 text-white">
                             Make Payment
                           </Button>
                         )}
                         <Button variant="destructive" size="sm" onClick={(e) => {
                           e.stopPropagation();
                           handleDeleteJob(job.id);
-                        }}>
+                        }} className="bg-red-600 hover:bg-red-700 text-white">
                           Delete
                         </Button>
                       </div>
@@ -230,15 +231,15 @@ export default function UserDashboard() {
           </TabsContent>
 
           <TabsContent value="post">
-            <Card>
+            <Card className="bg-opacity-50 backdrop-blur-md">
               <CardHeader>
-                <CardTitle>Post a New Job</CardTitle>
+                <CardTitle className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400">Post a New Job</CardTitle>
                 <CardDescription>Fill out the form below to post a new job</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handlePostJob} className="space-y-4">
                   <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-red-600 mb-1">Job Title</label>
+                    <label htmlFor="title" className="block text-sm font-medium text-pink-400 mb-1">Job Title</label>
                     <Input 
                       id="title" 
                       name="title" 
@@ -248,7 +249,7 @@ export default function UserDashboard() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-red-600 mb-1">Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium text-pink-400 mb-1">Description</label>
                     <Textarea 
                       id="description" 
                       name="description" 
@@ -258,7 +259,7 @@ export default function UserDashboard() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="price" className="block text-sm font-medium text-red-600 mb-1">Price (Rs.)</label>
+                    <label htmlFor="price" className="block text-sm font-medium text-pink-400 mb-1">Price (Rs.)</label>
                     <Input 
                       id="price" 
                       name="price" 
@@ -269,7 +270,7 @@ export default function UserDashboard() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="location" className="block text-sm font-medium text-red-600 mb-1">Location</label>
+                    <label htmlFor="location" className="block text-sm font-medium text-pink-400 mb-1">Location</label>
                     <Input 
                       id="location" 
                       name="location" 
@@ -278,7 +279,7 @@ export default function UserDashboard() {
                       required 
                     />
                   </div>
-                  <Button type="submit">Post Job</Button>
+                  <Button type="submit" className="bg-gradient-to-r from-pink-500 to-purple-400 hover:opacity-90 text-white">Post Job</Button>
                 </form>
               </CardContent>
             </Card>
@@ -286,14 +287,14 @@ export default function UserDashboard() {
         </Tabs>
       </main>
 
-      <footer className="mt-12 py-6 text-center text-red-400">
-        <p>&copy; 2024 HomeEase. All rights reserved.</p>
+      <footer className="mt-12 py-6 text-center text-pink-400">
+        <p>&copy; 2024 HomeEase. All rights reserved. Empowering the digital age.</p>
       </footer>
       <ToastContainer position="bottom-right" autoClose={3000} />
       <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
-        <DialogContent>
+        <DialogContent className="bg-opacity-50 backdrop-blur-md">
           <DialogHeader>
-            <DialogTitle>Make Payment</DialogTitle>
+            <DialogTitle className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-400">Make Payment</DialogTitle>
             <DialogDescription>
               Please confirm the payment details for the completed job.
             </DialogDescription>
@@ -301,13 +302,13 @@ export default function UserDashboard() {
           {selectedJob && (
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="job-title" className="text-right">
+                <Label htmlFor="job-title" className="text-right text-pink-400">
                   Job Title
                 </Label>
                 <Input id="job-title" value={selectedJob.title} className="col-span-3" readOnly />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="job-price" className="text-right">
+                <Label htmlFor="job-price" className="text-right text-pink-400">
                   Amount
                 </Label>
                 <Input id="job-price" value={`Rs.${selectedJob.price}`} className="col-span-3" readOnly />
@@ -315,11 +316,10 @@ export default function UserDashboard() {
             </div>
           )}
           <DialogFooter>
-            <Button onClick={handlePayment}>Confirm Payment</Button>
+            <Button onClick={handlePayment} className="bg-gradient-to-r from-pink-500 to-purple-400 hover:opacity-90 text-white">Confirm Payment</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   )
 }
-
