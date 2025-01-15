@@ -5,6 +5,7 @@
 import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
@@ -12,16 +13,12 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users, Menu, X } from 'lucide-react'
+import { Briefcase, CheckCircle, Home, Search, Star, ThumbsUp, Users, Menu, X, ArrowRight,  } from 'lucide-react'
 import { motion, useAnimation } from 'framer-motion'
 
 import { useEffect } from 'react';
 import ShuffleHero from '@/components/ui/hero'
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
-}
+
 
 const stagger = {
   animate: {
@@ -31,270 +28,268 @@ const stagger = {
   }
 }
 
-export default function HomePage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    phone: '',
-    address: '',
-    bio: '',
-    skills: [],
-    experience: '',
-    availability: '',
-    hourlyRate: '',
-  })
-  const controls = useAnimation()
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const fadeIn = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6 }
+};
 
-  useEffect(() => {
-    controls.start((i) => ({
-      opacity: 1,
-      transition: { delay: i * 0.3 },
-    }))
-  }, [controls])
+export default function HomePage() {
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const popularServices = [
+    { icon: <Home className="w-8 h-8" />, title: "House Cleaning", price: "From $49" },
+    { icon: <Briefcase className="w-8 h-8" />, title: "Plumbing", price: "From $79" },
+    { icon: <Star className="w-8 h-8" />, title: "Electrical", price: "From $89" },
+    { icon: <CheckCircle className="w-8 h-8" />, title: "Painting", price: "From $199" },
+  ];
 
   return (
-    <div className="min-h-screen bg-white text-red-500">
-    <div className="h-16"></div> {/* Spacer for fixed header */}
-    <header className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-white bg-opacity-90 backdrop-blur-sm transition-all duration-300 ease-in-out md:px-6 lg:px-8 text-red-500">
-      <motion.h1 
-        className="text-2xl font-bold"
-        initial={{ x: -20, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        HomeEase
-      </motion.h1>
-      <nav className="hidden md:flex space-x-4">
-        <NavItems setIsLoginOpen={setIsLoginOpen} setIsSignUpOpen={setIsSignUpOpen} />
-      </nav>
-      <div className="md:hidden">
-        <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <Menu className="h-6 w-6" />
-        </Button>
-      </div>
-    </header>
-
-    {/* Mobile menu */}
-    {isMobileMenuOpen && (
-      <div className="fixed inset-0 z-50 bg-white p-4 md:hidden">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Menu</h2>
-          <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
-            <X className="h-6 w-6" />
-          </Button>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center space-x-8">
+            <h1 className="text-2xl font-bold text-red-500">HomeEase</h1>
+            <nav className="hidden md:flex space-x-6">
+              <NavItems setIsLoginOpen={setIsLoginOpen} setIsSignUpOpen={setIsSignUpOpen} />
+            </nav>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Button variant="outline" onClick={() => setIsLoginOpen(true)}>Login</Button>
+            <Button onClick={() => setIsSignUpOpen(true)}>Sign Up</Button>
+            <Button variant="ghost" className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+              <Menu className="h-6 w-6" />
+            </Button>
+          </div>
         </div>
-        <nav className="flex flex-col space-y-4">
-          <NavItems setIsLoginOpen={setIsLoginOpen} setIsSignUpOpen={setIsSignUpOpen} />
-        </nav>
-      </div>
-    )}
+      </header>
 
+      <main>
+        {/* Hero Section */}
+        <section className="pt-24 pb-12 bg-gradient-to-b from-red-50 to-white">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl">
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold text-red-500 mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                Home Services, On Demand
+              </motion.h2>
+              <motion.p 
+                className="text-xl text-red-400 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Quality home services, delivered to your doorstep
+              </motion.p>
+              <motion.div 
+                className="flex space-x-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <Button size="lg" className="bg-red-500 hover:bg-red-600">Book a Service</Button>
+                <Button size="lg" variant="outline" className="text-red-500">Become a Partner</Button>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
-      
+        {/* Popular Services */}
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <h3 className="text-2xl font-bold text-red-500 mb-8">Popular Services</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {popularServices.map((service, index) => (
+                <motion.div
+                  key={index}
+                  className="group cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="text-center p-6 bg-red-50 hover:bg-red-100 transition-colors">
+                    <div className="text-red-400 mb-4 group-hover:text-red-500 transition-colors">
+                      {service.icon}
+                    </div>
+                    <h4 className="font-semibold text-red-500 mb-2">{service.title}</h4>
+                    <p className="text-red-400">{service.price}</p>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      <main className="container mx-auto px-4 py-8">
-        <ShuffleHero />
-
-        <motion.section 
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
-          variants={stagger}
-          initial="initial"
-          animate="animate"
-        >
-          <motion.div variants={fadeIn}>
-            <Card className="bg-red-100 h-full">
-              <CardHeader>
-                <Briefcase className="w-10 h-10 text-red-400 mb-2" />
-                <CardTitle className="text-red-500">Post Jobs</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-red-600">Easily post your home chores and find reliable help.</p>
-              </CardContent>
-            </Card>
-            
-          </motion.div>
-          <motion.div variants={fadeIn}>
-            <Card className="bg-red-100 h-full">
-              <CardHeader>
-                <Search className="w-10 h-10 text-red-400 mb-2" />
-                <CardTitle className="text-red-500">Find Work</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-red-600">Browse and apply for various home chore opportunities.</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-          <motion.div variants={fadeIn}>
-            <Card className="bg-red-100 h-full">
-              <CardHeader>
-                <CheckCircle className="w-10 h-10 text-red-400 mb-2" />
-                <CardTitle className="text-red-500">Get Things Done</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-red-600">Complete tasks efficiently and earn great reviews.</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </motion.section>
-
-        <motion.section 
-          className="mb-12"
-          initial="initial"
-          animate="animate"
-          variants={stagger}
-        >
-          <motion.h3 
-            className="text-2xl font-bold mb-4"
-            variants={fadeIn}
-          >
-            Featured Job
-          </motion.h3>
-          <motion.div variants={fadeIn}>
-            <Card className="bg-red-100">
-              <CardHeader>
-                <CardTitle className="text-red-500">House Cleaning Needed</CardTitle>
-                <p className="text-red-400">Posted by John D. • 2 hours ago</p>
-              </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-red-600">Looking for someone to clean a 2-bedroom apartment. Tasks include vacuuming, dusting, and bathroom cleaning.</p>
-                <div className="flex items-center gap-2 text-red-400">
-                  <Home className="w-5 h-5" />
-                  <span>123 Main St, Anytown, USA</span>
+        {/* Why Choose Us */}
+        <section className="py-12 bg-red-50">
+          <div className="container mx-auto px-4">
+            <h3 className="text-2xl font-bold text-red-500 mb-8">Why Choose HomeEase?</h3>
+            <div className="grid md:grid-cols-3 gap-8">
+              <motion.div 
+                className="flex items-start space-x-4"
+                variants={fadeIn}
+                initial="initial"
+                animate="animate"
+              >
+                <Users className="w-8 h-8 text-red-400 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-red-500 mb-2">Verified Professionals</h4>
+                  <p className="text-red-400">Background-checked and trained professionals at your service</p>
                 </div>
-                <p className="mt-4 font-bold text-red-500">$50</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </motion.section>
-
-        <motion.section 
-          className="mb-12"
-          initial="initial"
-          animate="animate"
-          variants={stagger}
-        >
-          <motion.h3 
-            className="text-2xl font-bold mb-4"
-            variants={fadeIn}
-          >
-            Why Choose HomeEase?
-          </motion.h3>
-          <motion.div 
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={stagger}
-          >
-            <motion.div 
-              className="flex flex-col items-center text-center"
-              variants={fadeIn}
-            >
-              <ThumbsUp className="w-12 h-12 text-red-400 mb-2" />
-              <h4 className="text-xl font-semibold mb-2">Trusted Service</h4>
-              <p className="text-red-600">Our helpers are vetted and reviewed by the community.</p>
-            </motion.div>
-            <motion.div 
-              className="flex flex-col items-center text-center"
-              variants={fadeIn}
-            >
-              <Users className="w-12 h-12 text-red-400 mb-2" />
-              <h4 className="text-xl font-semibold mb-2">Large Network</h4>
-              <p className="text-red-600">Connect with thousands of helpers in your area.</p>
-            </motion.div>
-            <motion.div 
-              className="flex flex-col items-center text-center"
-              variants={fadeIn}
-            >
-              <Star className="w-12 h-12 text-red-400 mb-2" />
-              <h4 className="text-xl font-semibold mb-2">Quality Assurance</h4>
-              <p className="text-red-600">We ensure high-quality service with our rating system.</p>
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        <motion.section 
-          className="mb-12"
-          initial="initial"
-          animate="animate"
-          variants={stagger}
-        >
-          <motion.h3 
-            className="text-2xl font-bold mb-4"
-            variants={fadeIn}
-          >
-            How It Works
-          </motion.h3>
-          <div className="text-red-600 text-lg">
-            <TypewriterEffect />
+              </motion.div>
+              <motion.div 
+                className="flex items-start space-x-4"
+                variants={fadeIn}
+                initial="initial"
+                animate="animate"
+              >
+                <CheckCircle className="w-8 h-8 text-red-400 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-red-500 mb-2">Insured Services</h4>
+                  <p className="text-red-400">Your home and services are covered by insurance</p>
+                </div>
+              </motion.div>
+              <motion.div 
+                className="flex items-start space-x-4"
+                variants={fadeIn}
+                initial="initial"
+                animate="animate"
+              >
+                <Star className="w-8 h-8 text-red-400 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-red-500 mb-2">Satisfaction Guaranteed</h4>
+                  <p className="text-red-400">100% satisfaction or we'll make it right</p>
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </motion.section>
+        </section>
 
-        <motion.section 
-          className="mb-12"
-          initial="initial"
-          animate="animate"
-          variants={fadeIn}
-        >
-          <h3 className="text-2xl font-bold mb-4">What Our Users Say</h3>
-          <div className="grid sm:grid-cols-2 gap-8">
-            <Card className="bg-red-100">
-              <CardContent className="pt-6">
-                <p className="text-red-600 italic">"HomeEase made it so easy to find help for my home projects. Highly recommended!"</p>
-                <p className="text-red-400 mt-4">- Sarah M., Homeowner</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-red-100">
-              <CardContent className="pt-6">
-                <p className="text-red-600 italic">"I've been able to earn extra income and help my community. It's a win-win!"</p>
-                <p className="text-red-400 mt-4">- Mike T., Helper</p>
-              </CardContent>
-            </Card>
+        {/* Featured Services */}
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <div className="flex justify-between items-center mb-8">
+              <h3 className="text-2xl font-bold text-red-500">Featured Services</h3>
+              <Button variant="ghost" className="text-red-500">
+                View All <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((item) => (
+                <motion.div
+                  key={item}
+                  className="group cursor-pointer"
+                  whileHover={{ y: -5 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: item * 0.1 }}
+                >
+                  <Card className="overflow-hidden">
+                    <div className="h-48 bg-red-100 relative">
+                      <div className="absolute bottom-4 left-4">
+                        <Badge variant="secondary" className="bg-white text-red-500">
+                          Most Popular
+                        </Badge>
+                      </div>
+                    </div>
+                    <CardContent className="p-4">
+                      <h4 className="font-semibold text-red-500 mb-2">Deep House Cleaning</h4>
+                      <p className="text-red-400 mb-4">Professional cleaning service for your entire home</p>
+                      <div className="flex justify-between items-center">
+                        <span className="font-bold text-red-500">From $99</span>
+                        <Button variant="ghost" size="sm" className="text-red-500">
+                          Book Now
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </motion.section>
+        </section>
 
-        <motion.section 
-          className="mb-12"
-          initial="initial"
-          animate="animate"
-          variants={fadeIn}
-        >
-          <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
-          <motion.div 
-            className="bg-red-100 p-8 rounded-lg text-center"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <p className="text-xl mb-4">Join HomeEase today and experience the easiest way to manage your home chores!</p>
-            <motion.span 
-              className="inline-block bg-red-500 text-white px-6 py-2 rounded-full cursor-pointer hover:bg-red-600 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Sign Up Now
-            </motion.span>
-          </motion.div>
-        </motion.section>
+        {/* Download App Section */}
+        <section className="py-12 bg-red-50">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <div className="md:w-1/2 mb-8 md:mb-0">
+                <h3 className="text-3xl font-bold text-red-500 mb-4">Get the HomeEase App</h3>
+                <p className="text-red-400 mb-6">Book services on the go with our mobile app</p>
+                <div className="flex space-x-4">
+                  <Button variant="outline" className="text-red-500">
+                    App Store
+                  </Button>
+                  <Button variant="outline" className="text-red-500">
+                    Google Play
+                  </Button>
+                </div>
+              </div>
+              <div className="md:w-1/2">
+                <div className="bg-red-100 h-64 rounded-lg"></div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
-     
 
-      <footer className="mt-12 py-6 text-center text-red-400">
-        <p>&copy; 2024 HomeEase. All rights reserved by 4Teens.</p>
+      <footer className="bg-red-50 py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h4 className="font-bold text-red-500 mb-4">About HomeEase</h4>
+              <ul className="space-y-2 text-red-400">
+                <li>About Us</li>
+                <li>Terms & Conditions</li>
+                <li>Privacy Policy</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-red-500 mb-4">For Customers</h4>
+              <ul className="space-y-2 text-red-400">
+                <li>Book a Service</li>
+                <li>Our Services</li>
+                <li>Safety & Insurance</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-red-500 mb-4">For Partners</h4>
+              <ul className="space-y-2 text-red-400">
+                <li>Become a Partner</li>
+                <li>Partner Success Stories</li>
+                <li>Partner Support</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-red-500 mb-4">Connect With Us</h4>
+              <ul className="space-y-2 text-red-400">
+                <li>Blog</li>
+                <li>Facebook</li>
+                <li>Twitter</li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-red-100 text-center text-red-400">
+            <p>&copy; 2024 HomeEase. All rights reserved by 4Teens.</p>
+          </div>
+        </div>
       </footer>
-      <style jsx>{`
-        @media (max-width: 640px) {
-          header {
-            left: 5%;
-            right: 5%;
-            border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgba(255, 130, 0, 0.1), 0 2px 4px -1px rgba(255, 130, 0, 0.06);
-          }
-        }
-      `}</style>
-   <AuthDialogs isLoginOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} isSignUpOpen={isSignUpOpen} setIsSignUpOpen={setIsSignUpOpen} />
-   </div>
-  )
+
+      <AuthDialogs 
+        isLoginOpen={isLoginOpen} 
+        setIsLoginOpen={setIsLoginOpen} 
+        isSignUpOpen={isSignUpOpen} 
+        setIsSignUpOpen={setIsSignUpOpen} 
+      />
+    </div>
+  );
 }
 
 

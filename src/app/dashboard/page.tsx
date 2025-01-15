@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -13,6 +13,9 @@ import { Badge } from "@/components/ui/badge"
 import { Briefcase, DollarSign, MapPin, Clock, User, CheckCircle, XCircle, Menu, X } from 'lucide-react'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -58,6 +61,8 @@ export default function UserDashboard() {
   const [newJob, setNewJob] = useState<NewJob>({ title: '', description: '', price: '', location: '' })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -95,6 +100,15 @@ export default function UserDashboard() {
       icon: <XCircle className="h-4 w-4 text-red-500" />
     });
   };
+
+  const handlePayment = () => {
+    // Add your payment logic here
+    setIsPaymentOpen(false);
+    toast.success('Payment successful!', {
+      icon: <CheckCircle className="h-4 w-4 text-green-500" />
+    });
+  };
+
 
   return (
     <div className="min-h-screen bg-white text-red-500">
@@ -191,9 +205,23 @@ export default function UserDashboard() {
                       <Badge variant={job.status === 'Open' ? 'default' : job.status === 'In Progress' ? 'secondary' : 'outline'}>
                         {job.status}
                       </Badge>
-                      <Button variant="destructive" size="sm" onClick={() => handleDeleteJob(job.id)}>
-                        Delete
-                      </Button>
+                      <div className="flex gap-2">
+                        {job.status === 'Completed' && (
+                          <Button size="sm" onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedJob(job);
+                            setIsPaymentOpen(true);
+                          }}>
+                            Make Payment
+                          </Button>
+                        )}
+                        <Button variant="destructive" size="sm" onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteJob(job.id);
+                        }}>
+                          Delete
+                        </Button>
+                      </div>
                     </CardFooter>
                   </Card>
                 </motion.div>
@@ -262,6 +290,36 @@ export default function UserDashboard() {
         <p>&copy; 2024 HomeEase. All rights reserved.</p>
       </footer>
       <ToastContainer position="bottom-right" autoClose={3000} />
+      <Dialog open={isPaymentOpen} onOpenChange={setIsPaymentOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Make Payment</DialogTitle>
+            <DialogDescription>
+              Please confirm the payment details for the completed job.
+            </DialogDescription>
+          </DialogHeader>
+          {selectedJob && (
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="job-title" className="text-right">
+                  Job Title
+                </Label>
+                <Input id="job-title" value={selectedJob.title} className="col-span-3" readOnly />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="job-price" className="text-right">
+                  Amount
+                </Label>
+                <Input id="job-price" value={`Rs.${selectedJob.price}`} className="col-span-3" readOnly />
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button onClick={handlePayment}>Confirm Payment</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
+

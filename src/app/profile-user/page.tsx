@@ -1,23 +1,23 @@
 /* eslint-disable */
-'use client'
-
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { Label } from "@/components/ui/label"
-import { Briefcase, DollarSign, MapPin, Clock, User, Mail, Phone } from 'lucide-react'
+"use client"
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Briefcase, DollarSign, MapPin, Clock, User, Mail, Phone, Wallet } from 'lucide-react';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 }
-}
+};
 
 export default function UserProfile() {
   const [profile, setProfile] = useState({
@@ -25,26 +25,39 @@ export default function UserProfile() {
     email: 'john.doe@example.com',
     phone: '(123) 456-7890',
     address: '123 Main St, New York, NY 10001',
-  })
+    balance: 250.00
+  });
 
   const [jobs, setJobs] = useState([
     { id: 1, title: 'Bathroom Renovation', description: 'Need help renovating a small bathroom', price: 500, estimatedTime: '3 days', location: 'New York, NY', status: 'Open' },
     { id: 2, title: 'Kitchen Sink Repair', description: 'Leaking kitchen sink needs fixing', price: 100, estimatedTime: '2 hours', location: 'New York, NY', status: 'In Progress' },
     { id: 3, title: 'Lawn Mowing', description: 'Weekly lawn mowing service needed', price: 50, estimatedTime: '1 hour', location: 'New York, NY', status: 'Completed' },
-  ])
+  ]);
 
-  const [editMode, setEditMode] = useState(false)
-  const [editedProfile, setEditedProfile] = useState(profile)
+  const [editMode, setEditMode] = useState(false);
+  const [editedProfile, setEditedProfile] = useState(profile);
+  const [amount, setAmount] = useState('');
 
-  const handleInputChange = (e: { target: { name: any; value: any } }) => {
-    const { name, value } = e.target
-    setEditedProfile(prev => ({ ...prev, [name]: value }))
-  }
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
+    const { name, value } = e.target;
+    setEditedProfile(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSaveProfile = () => {
-    setProfile(editedProfile)
-    setEditMode(false)
-  }
+    setProfile(editedProfile);
+    setEditMode(false);
+  };
+
+  const handleAddFunds = () => {
+    const numAmount = parseFloat(amount);
+    if (!isNaN(numAmount) && numAmount > 0) {
+      setProfile(prev => ({
+        ...prev,
+        balance: prev.balance + numAmount
+      }));
+      setAmount('');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-white text-red-500">
@@ -60,59 +73,112 @@ export default function UserProfile() {
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid gap-6 md:grid-cols-[1fr_2fr]">
-          <motion.div variants={fadeIn} initial="initial" animate="animate">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center space-x-4">
-                  <Avatar className="w-20 h-20">
-                    <AvatarImage src="/placeholder.svg?height=80&width=80" alt={profile.name} />
-                    <AvatarFallback>{profile.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <CardTitle>{profile.name}</CardTitle>
-                    <CardDescription>HomeEase User</CardDescription>
+          <div className="space-y-6">
+            <motion.div variants={fadeIn} initial="initial" animate="animate">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center space-x-4">
+                    <Avatar className="w-20 h-20">
+                      <AvatarImage src="/placeholder.svg?height=80&width=80" alt={profile.name} />
+                      <AvatarFallback>{profile.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <CardTitle>{profile.name}</CardTitle>
+                      <CardDescription>HomeEase User</CardDescription>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {editMode ? (
-                  <form className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Name</Label>
-                      <Input id="name" name="name" value={editedProfile.name} onChange={handleInputChange} />
+                </CardHeader>
+                <CardContent>
+                  {editMode ? (
+                    <form className="space-y-4">
+                      <div>
+                        <Label htmlFor="name">Name</Label>
+                        <Input id="name" name="name" value={editedProfile.name} onChange={handleInputChange} />
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Email</Label>
+                        <Input id="email" name="email" type="email" value={editedProfile.email} onChange={handleInputChange} />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone</Label>
+                        <Input id="phone" name="phone" value={editedProfile.phone} onChange={handleInputChange} />
+                      </div>
+                      <div>
+                        <Label htmlFor="address">Address</Label>
+                        <Input id="address" name="address" value={editedProfile.address} onChange={handleInputChange} />
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="space-y-2">
+                      <p className="flex items-center"><Mail className="w-4 h-4 mr-2" /> {profile.email}</p>
+                      <p className="flex items-center"><Phone className="w-4 h-4 mr-2" /> {profile.phone}</p>
+                      <p className="flex items-center"><MapPin className="w-4 h-4 mr-2" /> {profile.address}</p>
                     </div>
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input id="email" name="email" type="email" value={editedProfile.email} onChange={handleInputChange} />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Phone</Label>
-                      <Input id="phone" name="phone" value={editedProfile.phone} onChange={handleInputChange} />
-                    </div>
-                    <div>
-                      <Label htmlFor="address">Address</Label>
-                      <Input id="address" name="address" value={editedProfile.address} onChange={handleInputChange} />
-                    </div>
-                  </form>
-                ) : (
-                  <div className="space-y-2">
-                    <p className="flex items-center"><Mail className="w-4 h-4 mr-2" /> {profile.email}</p>
-                    <p className="flex items-center"><Phone className="w-4 h-4 mr-2" /> {profile.phone}</p>
-                    <p className="flex items-center"><MapPin className="w-4 h-4 mr-2" /> {profile.address}</p>
+                  )}
+                </CardContent>
+                <CardFooter>
+                  {editMode ? (
+                    <Button onClick={handleSaveProfile}>Save Changes</Button>
+                  ) : (
+                    <Button onClick={() => setEditMode(true)}>Edit Profile</Button>
+                  )}
+                </CardFooter>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeIn} initial="initial" animate="animate">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Wallet className="w-5 h-5" />
+                    Wallet Balance
+                  </CardTitle>
+                  <CardDescription>
+                    Your current balance is:
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-red-500">
+                    ${profile.balance.toFixed(2)}
                   </div>
-                )}
-              </CardContent>
-              <CardFooter>
-                {editMode ? (
-                  <Button onClick={handleSaveProfile}>Save Changes</Button>
-                ) : (
-                  <Button onClick={() => setEditMode(true)}>Edit Profile</Button>
-                )}
-              </CardFooter>
-            </Card>
-          </motion.div>
+                </CardContent>
+                <CardFooter>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="outline" className="w-full">Add Funds</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Add Funds to Your Wallet</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Enter the amount you want to add to your wallet.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <div className="py-4">
+                        <Label htmlFor="amount">Amount ($)</Label>
+                        <Input
+                          id="amount"
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                          placeholder="Enter amount"
+                        />
+                      </div>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleAddFunds}>Add Funds</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          </div>
 
           <motion.div variants={fadeIn} initial="initial" animate="animate">
+            {/* Jobs section remains the same */}
             <Card>
               <CardHeader>
                 <CardTitle>My Job Postings</CardTitle>
@@ -166,5 +232,5 @@ export default function UserProfile() {
         <p>&copy; 2023 HomeEase. All rights reserved.</p>
       </footer>
     </div>
-  )
+  );
 }
