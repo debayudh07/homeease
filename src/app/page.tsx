@@ -275,23 +275,6 @@ function NavItems({ setIsLoginOpen, setIsSignUpOpen }: { setIsLoginOpen: React.D
       >
         Pricing
       </motion.a>
-
-      <motion.span 
-        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsLoginOpen(true)}
-      >
-        Login
-      </motion.span>
-      <motion.span 
-        className="text-red-400 cursor-pointer hover:text-red-600 transition-colors"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsSignUpOpen(true)}
-      >
-        Sign Up
-      </motion.span>
     </>
   )
 }
