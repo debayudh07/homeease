@@ -1,14 +1,36 @@
 /* eslint-disable */
 'use client'
 
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
 import { useState } from 'react'
+import { ethers } from 'ethers'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Badge } from "@/components/ui/badge"
 import { Check, X } from 'lucide-react'
-import { PaymentGateway } from '@/components/ui/payment-gateway'
+import { PaymentOptions } from '@/components/payment-options'
+import { useToast } from '@/hooks/use-toast';
+
+interface PricingPlan {
+  name: string;
+  description: string;
+  price: number;
+  features: string[];
+  notIncluded: string[];
+}
+
+interface SelectedPlan {
+  name: string;
+  price: number;
+  isAnnual: boolean;
+}
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -25,14 +47,13 @@ const stagger = {
 }
 
 export default function PricingPage() {
+  const { toast } = useToast()
   const [isAnnual, setIsAnnual] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState<null | {
-    name: string
-    price: number
-    isAnnual: boolean
-  }>(null)
+  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null)
+  const [isWalletConnected, setIsWalletConnected] = useState(false)
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false)
 
-  const pricingPlans = [
+  const pricingPlans: PricingPlan[] = [
     {
       name: 'Basic',
       description: 'For occasional home service needs',
@@ -84,19 +105,124 @@ export default function PricingPage() {
     }
   ]
 
-  const handlePlanSelection = (plan: typeof pricingPlans[0]) => {
+  const handlePlanSelection = (plan: PricingPlan) => {
     setSelectedPlan({
       name: plan.name,
       price: plan.price,
       isAnnual: isAnnual
     })
+    setShowPaymentOptions(true)
+  }
+
+  const connectWallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' })
+        setIsWalletConnected(true)
+        toast({
+          title: "Wallet Connected",
+          description: "Your MetaMask wallet is now connected."
+        })
+      } catch (error) {
+        console.error("Failed to connect wallet:", error)
+        toast({
+          title: "Connection Failed",
+          description: "Failed to connect your MetaMask wallet.",
+          variant: "destructive"
+        })
+      }
+    } else {
+      console.log('Please install MetaMask!')
+      toast({
+        title: "MetaMask Not Found",
+        description: "Please install MetaMask to use this feature.",
+        variant: "destructive"
+      })
+    }
+  }
+
+  const handlePayment = async (paymentMethod: string) => {
+    if (paymentMethod === 'metamask' && selectedPlan) {
+      if (!isWalletConnected) {
+        await connectWallet()
+      }
+      if (isWalletConnected && window.ethereum) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0xaa36a7' }]
+          })
+
+          const provider = new ethers.BrowserProvider(window.ethereum)
+          const signer = await provider.getSigner()
+          
+          const transactionAmount = ethers.parseEther("0.0001")
+
+          const tx = await signer.sendTransaction({
+            to: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+            value: transactionAmount
+          })
+
+          toast({
+            title: "Transaction Sent",
+            description: "Your transaction has been sent. Waiting for confirmation..."
+          })
+
+          await tx.wait()
+          
+          toast({
+            title: "Payment Successful",
+            description: `You've successfully paid 0.0001 Sepolia ETH for the ${selectedPlan.name} plan.`
+          })
+
+          setShowPaymentOptions(false)
+          setSelectedPlan(null)
+        } catch (error: any) {
+          console.error("Payment failed:", error)
+          if (error.code === 4902) {
+            try {
+              await window.ethereum.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: '0xaa36a7',
+                  chainName: 'Sepolia',
+                  nativeCurrency: {
+                    name: 'Sepolia Ether',
+                    symbol: 'SEP',
+                    decimals: 18
+                  },
+                  rpcUrls: ['https://sepolia.infura.io/v3/YOUR-PROJECT-ID'],
+                  blockExplorerUrls: ['https://sepolia.etherscan.io']
+                }]
+              })
+            } catch (addError) {
+              console.error("Failed to add Sepolia network:", addError)
+            }
+          }
+          toast({
+            title: "Payment Failed",
+            description: "There was an error processing your payment. Please try again.",
+            variant: "destructive"
+          })
+        }
+      }
+    } else if (paymentMethod === 'upi' || paymentMethod === 'card') {
+      toast({
+        title: "Payment Method Selected",
+        description: `You've selected to pay with ${paymentMethod}. This feature is not implemented yet.`
+      })
+      setShowPaymentOptions(false)
+    }
   }
 
   return (
     <div className="min-h-screen bg-white text-orange-500">
       <header className="bg-white shadow-md p-4">
-        <div className="container mx-auto">
+        <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">HomeEase Pricing</h1>
+          <Button onClick={connectWallet} disabled={isWalletConnected}>
+            {isWalletConnected ? 'Wallet Connected' : 'Connect Wallet'}
+          </Button>
         </div>
       </header>
 
@@ -195,14 +321,15 @@ export default function PricingPage() {
       </main>
 
       <footer className="mt-12 py-6 text-center text-orange-400">
-        <p>&copy; 2023 HomeEase. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} HomeEase. All rights reserved.</p>
       </footer>
 
-      {selectedPlan && (
-        <PaymentGateway
-          isOpen={!!selectedPlan}
-          onClose={() => setSelectedPlan(null)}
+      {showPaymentOptions && selectedPlan && (
+        <PaymentOptions
+          isOpen={showPaymentOptions}
+          onClose={() => setShowPaymentOptions(false)}
           plan={selectedPlan}
+          onPayment={handlePayment}
         />
       )}
     </div>

@@ -123,8 +123,18 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-6 text-lg">
-                  Launch App
+                <Button 
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-6 text-lg"
+                  onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/app-release.apk'; // Place your APK file in the public folder
+                  link.download = 'app-release.apk';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                  }}
+                >
+                  Download App <span className="ml-2 text-sm">(APK)</span>
                 </Button>
                 <Button className="bg-transparent border border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-white px-8 py-6 text-lg">
                   Watch Demo
